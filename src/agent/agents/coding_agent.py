@@ -1,8 +1,8 @@
 """OpenHands coding agent setup."""
 
-fromopenhands_sdk.openhands.sdk import Agent, AgentContext, LLM, Tool
-fromopenhands_sdk.openhands.tools.file_editor import FileEditorTool
-fromopenhands_sdk.openhands.tools.terminal import TerminalTool
+from openhands.sdk import Agent, AgentContext, LLM, Tool
+from openhands.tools.file_editor import FileEditorTool
+from openhands.tools.terminal import TerminalTool
 
 
 CODING_INSTRUCTIONS = """You are a careful coding agent working in the supplied repository.
@@ -21,4 +21,3 @@ def create_coding_agent(llm: LLM) -> Agent:
         ],
         agent_context=AgentContext(system_message_suffix=CODING_INSTRUCTIONS),
     )
-

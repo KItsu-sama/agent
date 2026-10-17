@@ -2,8 +2,8 @@
 
 from pathlib import Path
 
-fromopenhands_sdk.openhands.sdk import LLM, Conversation
-fromopenhands_sdk.openhands.sdk.security import (
+from openhands.sdk import LLM, Conversation
+from openhands.sdk.security import (
     ConfirmRisky,
     EnsembleSecurityAnalyzer,
     PatternSecurityAnalyzer,

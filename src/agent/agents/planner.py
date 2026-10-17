@@ -2,8 +2,8 @@
 
 from pathlib import Path
 
-fromopenhands_sdk.openhands.sdk import Agent, AgentContext, LLM
-fromopenhands_sdk.openhands.sdk.conversation.state import ConversationExecutionStatus
+from openhands.sdk import Agent, AgentContext, LLM
+from openhands.sdk.conversation.state import ConversationExecutionStatus
 
 from agent.context.conversation import latest_agent_message, make_conversation
 
