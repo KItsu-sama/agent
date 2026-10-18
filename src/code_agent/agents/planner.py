@@ -2,10 +2,10 @@
 
 from pathlib import Path
 
-fromopenhands_sdk.openhands.sdk import Agent, AgentContext, LLM
-fromopenhands_sdk.openhands.sdk.conversation.state import ConversationExecutionStatus
+from openhands_sdk.openhands.sdk import Agent, AgentContext, LLM
+from openhands_sdk.openhands.sdk.conversation.state import ConversationExecutionStatus
 
-from agent.context.conversation import latest_agent_message, make_conversation
+from code_agent.context.conversation import latest_agent_message, make_conversation
 
 
 PLANNER_INSTRUCTIONS = """You are a software-engineering planner. Use only the

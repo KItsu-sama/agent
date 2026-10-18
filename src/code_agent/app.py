@@ -2,10 +2,10 @@
 
 from pathlib import Path
 
-from agent.config import Settings
-from agent.core.task import Task, TaskPhase
-from agent.core.workflow import Workflow
-from agent.providers.factory import create_llm
+from code_agent.config import Settings
+from code_agent.core.task import Task, TaskPhase
+from code_agent.core.workflow import Workflow
+from code_agent.providers.factory import create_llm
 
 
 def run(task_description: str, workspace: Path, settings: Settings) -> int:

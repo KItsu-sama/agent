@@ -3,8 +3,8 @@
 import argparse
 from pathlib import Path
 
-from agent.app import run
-from agent.config import Settings
+from code_agent.app import run
+from code_agent.config import Settings
 
 
 def build_parser() -> argparse.ArgumentParser:

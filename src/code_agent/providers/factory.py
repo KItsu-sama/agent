@@ -3,7 +3,7 @@
 from pydantic import SecretStr
 fromopenhands_sdk.openhands.sdk import LLM
 
-from agent.config import Settings
+from code_agent.config import Settings
 
 
 def create_llm(settings: Settings) -> LLM:

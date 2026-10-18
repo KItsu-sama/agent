@@ -11,17 +11,17 @@ fromopenhands_sdk.openhands.sdk.security import (
     SecurityRisk,
 )
 
-from agent.agents.coding_agent import create_coding_agent
-from agent.agents.planner import create_plan
-from agent.context.conversation import (
+from code_agent.agents.coding_agent import create_coding_agent
+from code_agent.agents.planner import create_plan
+from code_agent.context.conversation import (
     latest_agent_message,
     make_conversation,
     run_until_finished,
 )
-from agent.context.repository import inspect_repository
-from agent.core.task import Task, TaskPhase
-from agent.security.approvals import approve_plan, confirm_pending_actions
-from agent.tools.tests import edit_succeeded, checks_passed
+from code_agent.context.repository import inspect_repository
+from code_agent.core.task import Task, TaskPhase
+from code_agent.security.approvals import approve_plan, confirm_pending_actions
+from code_agent.tools.tests import edit_succeeded, checks_passed
 
 
 class Workflow:
