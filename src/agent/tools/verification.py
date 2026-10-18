@@ -1,6 +1,5 @@
 """Run bounded, independently observed checks for Python workspaces."""
 
-import importlib.util
 import subprocess
 import sys
 from dataclasses import dataclass
@@ -48,12 +47,20 @@ def verification_commands(workspace: Path) -> tuple[tuple[str, ...], ...]:
         pytest_configured = (workspace / "conftest.py").is_file()
         if pyproject.is_file():
             try:
+                pyproject_text = pyproject.read_text(encoding="utf-8").lower()
                 pytest_configured = pytest_configured or (
-                    "[tool.pytest" in pyproject.read_text(encoding="utf-8")
+                    "[tool.pytest" in pyproject_text or "pytest" in pyproject_text
                 )
             except OSError:
                 pass
-        if pytest_configured or importlib.util.find_spec("pytest") is not None:
+        for requirements in workspace.glob("requirements*.txt"):
+            try:
+                pytest_configured = pytest_configured or (
+                    "pytest" in requirements.read_text(encoding="utf-8").lower()
+                )
+            except OSError:
+                pass
+        if pytest_configured:
             commands.append((sys.executable, "-m", "pytest", "-q"))
         else:
             commands.append(
