@@ -26,7 +26,8 @@ def verification_commands(workspace: Path) -> tuple[tuple[str, ...], ...]:
     """Choose conservative Python checks based on visible project structure."""
     commands: list[tuple[str, ...]] = []
     source_dir = workspace / "src"
-    has_python = source_dir.is_dir() or any(
+    tests_dir = workspace / "tests"
+    has_python = source_dir.is_dir() or tests_dir.is_dir() or any(
         path.suffix == ".py"
         for path in workspace.iterdir()
         if path.is_file()
@@ -37,7 +38,6 @@ def verification_commands(workspace: Path) -> tuple[tuple[str, ...], ...]:
     if source_dir.is_dir():
         commands.append((sys.executable, "-m", "compileall", "-q", "src"))
 
-    tests_dir = workspace / "tests"
     test_files = (
         list(tests_dir.rglob("test_*.py")) + list(tests_dir.rglob("*_test.py")
         if tests_dir.is_dir()
