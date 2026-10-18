@@ -3,13 +3,13 @@
 from collections.abc import Callable
 from pathlib import Path
 
-from openhands_sdk.openhands.sdk import Agent, Conversation
-from openhands_sdk.openhands.sdk.conversation.state import (
+from openhands.sdk import Agent, Conversation
+from openhands.sdk.conversation.state import (
     ConversationExecutionStatus,
     ConversationState,
 )
-from openhands_sdk.openhands.sdk.event import ActionEvent, MessageEvent
-from openhands_sdk.openhands.sdk.llm import content_to_str
+from openhands.sdk.event import ActionEvent, MessageEvent
+from openhands.sdk.llm import content_to_str
 
 
 ActionApproval = Callable[[list[ActionEvent]], bool]
@@ -62,4 +62,3 @@ def run_until_finished(
                 conversation.reject_pending_actions("User rejected the actions")
                 continue
         conversation.run()
-

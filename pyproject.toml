@@ -15,8 +15,8 @@ dependencies = [
 ]
 
 [project.scripts]
-code-agent = "code_agent.main:main"
+code-agent = "agent.main:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
-
+include = ["agent*"]

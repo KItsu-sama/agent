@@ -1,6 +1,6 @@
 import unittest
 
-from code_agent.tools.tests import checks_passed, edit_succeeded
+from agent.tools.tests import checks_passed, edit_succeeded
 
 
 class WorkflowMarkerTests(unittest.TestCase):

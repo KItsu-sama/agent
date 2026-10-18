@@ -1,6 +1,6 @@
 """Interactive approval prompts."""
 
-fromopenhands_sdk.openhands.sdk.event import ActionEvent
+from openhands.sdk.event import ActionEvent
 
 
 def approve_plan() -> bool:
@@ -27,3 +27,15 @@ def confirm_pending_actions(pending: list[ActionEvent]) -> bool:
         return False
     return answer in {"yes", "y"}
 
+
+def confirm_verification(commands: tuple[tuple[str, ...], ...]) -> bool:
+    """Ask before executing project-controlled test code."""
+    print("\nThe following verification commands will run in the target workspace:")
+    for index, command in enumerate(commands, start=1):
+        print(f"{index}. {' '.join(command)}")
+    try:
+        answer = input("Run these checks? (yes/no): ").strip().lower()
+    except (EOFError, KeyboardInterrupt):
+        print("\nNo verification approval received.")
+        return False
+    return answer in {"yes", "y"}

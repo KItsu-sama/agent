@@ -2,8 +2,8 @@
 
 from pathlib import Path
 
-fromopenhands_sdk.openhands.sdk import LLM, Conversation
-fromopenhands_sdk.openhands.sdk.security import (
+from openhands.sdk import LLM, Conversation
+from openhands.sdk.security import (
     ConfirmRisky,
     EnsembleSecurityAnalyzer,
     PatternSecurityAnalyzer,
@@ -20,8 +20,17 @@ from agent.context.conversation import (
 )
 from agent.context.repository import inspect_repository
 from agent.core.task import Task, TaskPhase
-from agent.security.approvals import approve_plan, confirm_pending_actions
-from agent.tools.tests import edit_succeeded, checks_passed
+from agent.security.approvals import (
+    approve_plan,
+    confirm_pending_actions,
+    confirm_verification,
+)
+from agent.tools.tests import edit_succeeded
+from agent.tools.verification import (
+    format_verification,
+    verification_commands,
+    verify_workspace,
+)
 
 
 class Workflow:
@@ -32,7 +41,7 @@ class Workflow:
 
     def run(self, task: Task) -> Task:
         task.phase = TaskPhase.INSPECTING
-        context = inspect_repository(self.workspace)
+        context = inspect_repository(self.workspace, task.description)
 
         task.phase = TaskPhase.PLANNING
         task.plan = create_plan(
@@ -95,17 +104,21 @@ if implementation is complete, or EDIT_STATUS: FAIL if it is not."""
                 return task
 
             task.phase = TaskPhase.TESTING
-            conversation.send_message(
-                """Run the relevant tests and checks for the changes. Report the
-exact commands and observed results, including any checks that could not run.
-Do not make further code changes. End with CHECKS_STATUS: PASS only if all
-applicable checks passed; otherwise end with CHECKS_STATUS: FAIL."""
-            )
-            run_until_finished(conversation, confirm_pending_actions)
-            task.result = latest_agent_message(conversation)
-            task.checks_passed = checks_passed(task.result)
+            commands = verification_commands(self.workspace)
+            if commands and not confirm_verification(commands):
+                task.phase = TaskPhase.CANCELLED
+                task.result = (
+                    "Implementation was reported complete, but independent "
+                    "verification was not approved. No test result is claimed.\n"
+                    f"{edit_report}"
+                )
+                return task
+
+            verification = verify_workspace(self.workspace, commands)
+            task.checks_passed = verification.passed
+            task.result = f"{edit_report}\n\n{format_verification(verification)}"
             task.phase = (
-                TaskPhase.COMPLETED if task.checks_passed else TaskPhase.FAILED
+                TaskPhase.COMPLETED if verification.passed else TaskPhase.FAILED
             )
             return task
         finally:
