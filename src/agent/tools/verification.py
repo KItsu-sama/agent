@@ -38,7 +38,7 @@ def verification_commands(workspace: Path) -> tuple[tuple[str, ...], ...]:
         commands.append((sys.executable, "-m", "compileall", "-q", "src"))
 
     test_files = (
-        list(tests_dir.rglob("test_*.py")) + list(tests_dir.rglob("*_test.py")
+        list(tests_dir.rglob("test_*.py")) + list(tests_dir.rglob("*_test.py"))
         if tests_dir.is_dir()
         else []
     )
