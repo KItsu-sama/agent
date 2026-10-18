@@ -1,6 +1,6 @@
 """Interactive approval prompts."""
 
-fromopenhands_sdk.openhands.sdk.event import ActionEvent
+from openhands.sdk.event import ActionEvent
 
 
 def approve_plan() -> bool:
