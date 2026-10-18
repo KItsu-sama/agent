@@ -32,7 +32,7 @@ class Workflow:
 
     def run(self, task: Task) -> Task:
         task.phase = TaskPhase.INSPECTING
-        context = inspect_repository(self.workspace)
+        context = inspect_repository(self.workspace, task.description)
 
         task.phase = TaskPhase.PLANNING
         task.plan = create_plan(
