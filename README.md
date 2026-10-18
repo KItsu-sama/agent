@@ -29,7 +29,7 @@ default; that directory is also ignored.
 code-agent --workspace C:\path\to\repository "Add input validation to the upload endpoint"
 ```
 
-You can also run from this checkout with `python -m code_agent.main ...` after
+You can also run from this checkout with `python -m agent.main ...` after
 installing the package. The agent presents a plan and waits for approval before
 it can edit. Actions classified as medium or high risk require separate
 approval. The agent does not commit or push. Its process exit code is `0` only
@@ -37,7 +37,7 @@ when it reports that all applicable checks passed.
 
 ## Project layout
 
-- `src/code_agent/` contains the packaged CLI and the modules used by the first
+- `src/agent/` contains the packaged CLI and the modules used by the first
   workflow.
 - `examples/` contains the earlier, standalone OpenHands SDK reference scripts.
 - `tests/` contains focused tests for workflow status handling.
